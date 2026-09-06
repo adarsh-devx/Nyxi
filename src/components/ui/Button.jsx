@@ -3,13 +3,13 @@ const base =
 
 const variants = {
   primary:
-    'bg-accent text-white shadow-brutal-sm hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal active:translate-x-1 active:translate-y-1 active:shadow-none',
+    'bg-accent text-white shadow-brutal-sm hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_0_var(--color-ink)] active:translate-x-1 active:translate-y-1 active:shadow-none',
   secondary:
-    'bg-surface text-ink shadow-brutal-sm hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal active:translate-x-1 active:translate-y-1 active:shadow-none',
+    'bg-surface text-ink shadow-brutal-sm hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_0_var(--color-ink)] active:translate-x-1 active:translate-y-1 active:shadow-none',
   // For use on accent/dark backgrounds.
-  dark: 'border-ink bg-ink text-paper shadow-[4px_4px_0_0_var(--color-paper)] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_0_var(--color-paper)] active:translate-x-1 active:translate-y-1 active:shadow-none',
+  dark: 'border-ink bg-ink text-paper shadow-[4px_4px_0_0_var(--color-paper)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_0_var(--color-paper)] active:translate-x-1 active:translate-y-1 active:shadow-none',
   outline:
-    'bg-transparent text-ink shadow-[4px_4px_0_0_rgba(17,17,17,0.9)] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_0_rgba(17,17,17,0.9)] active:translate-x-1 active:translate-y-1 active:shadow-none',
+    'bg-transparent text-ink shadow-[4px_4px_0_0_rgba(17,17,17,0.9)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_0_rgba(17,17,17,0.9)] active:translate-x-1 active:translate-y-1 active:shadow-none',
 }
 
 const sizes = {

@@ -77,7 +77,7 @@ export default function WallpaperCard({ wallpaper, className = '' }) {
           onClick={toggle}
           aria-pressed={playing}
           aria-label={`${playing ? 'Pause' : 'Play'} preview of ${wallpaper.title}`}
-          className="absolute right-3 top-3 rounded-full border-2 border-ink bg-surface p-3 text-ink shadow-[2px_2px_0_0_var(--color-ink)] transition-transform hover:scale-105 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
+          className="absolute right-3 top-3 rounded-full border-2 border-ink bg-surface p-3 text-ink shadow-[2px_2px_0_0_var(--color-ink)] transition-transform hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
         >
           {playing ? (
             <Pause size={20} aria-hidden="true" />
