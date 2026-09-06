@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@theme {
+  /* Design tokens — retheme the whole site from here */
+  --color-paper: #f7f6f0;
+  --color-ink: #111111;
+  --color-surface: #ffffff;
+  --color-accent: #2e5bff;
+
+  --font-hand: "Patrick Hand", "Segoe Print", "Comic Sans MS", cursive;
+  --font-scribble: "Caveat", "Patrick Hand", cursive;
+
+  --shadow-brutal-sm: 4px 4px 0 0 var(--color-ink);
+  --shadow-brutal: 6px 6px 0 0 var(--color-ink);
+  --shadow-brutal-lg: 10px 10px 0 0 var(--color-ink);
+
+  --animate-marquee: marquee 30s linear infinite;
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+@layer base {
+  html {
+    /* Rotated marquee/stickers intentionally bleed past the edges */
+    overflow-x: clip;
+    /* Custom ScrollProgress indicator replaces the native scrollbar */
+    scrollbar-width: none;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  body {
+    @apply bg-paper font-hand text-ink antialiased;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  video {
+    background: var(--color-ink);
+  }
+}
+
+/* Lenis smooth-scroll recommended styles */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Subtle dot-grid texture used on paper sections */
+@utility bg-dots {
+  background-image: radial-gradient(rgb(17 17 17 / 0.08) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+
+/* Same texture in white, for dark/accent sections */
+@utility bg-dots-light {
+  background-image: radial-gradient(rgb(255 255 255 / 0.18) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+
+/* Giant outlined type (feature numbers, watermarks) */
+@utility text-outline {
+  -webkit-text-stroke: 2px var(--color-ink);
+  color: transparent;
+}
+
+/* Scroll-reveal: elements opt in with data-reveal, App adds .is-visible */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Reduced motion: kill decorative motion globally */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
