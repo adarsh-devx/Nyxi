@@ -50,7 +50,7 @@ export default function ExtensionShowcase() {
               width="64"
               height="64"
               loading="lazy"
-              className="mx-auto h-10 w-10 rounded-lg border border-white/30 object-cover sm:h-16 sm:w-16 sm:rounded-xl"
+              className="mx-auto h-10 w-10 object-contain drop-shadow-md sm:h-16 sm:w-16"
             />
             <p className="mt-1.5 text-xl font-bold text-white sm:mt-3 sm:text-3xl">NYXI</p>
             <p className="hidden font-scribble text-lg text-white/85 sm:block sm:text-2xl">
