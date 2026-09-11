@@ -1,4 +1,6 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { AnimatePresence } from 'framer-motion'
+import Preloader from './components/Preloader.jsx'
 import Navbar from './components/Navbar.jsx'
 import ScrollProgress from './components/ScrollProgress.jsx'
 import Hero from './components/Hero.jsx'
@@ -11,7 +13,7 @@ import ExtensionShowcase from './components/ExtensionShowcase.jsx'
 import FinalCTA from './components/FinalCTA.jsx'
 import Footer from './components/Footer.jsx'
 import StarfallCursor from './components/StarfallCursor.jsx'
-import { initSmoothScroll } from './lib/scroll.js'
+import { initSmoothScroll, lockScroll, refreshScroll } from './lib/scroll.js'
 
 /** Reveal every [data-reveal] element the first time it enters the viewport. */
 function useRevealOnScroll() {
@@ -40,12 +42,34 @@ function useRevealOnScroll() {
 }
 
 export default function App() {
-  useEffect(() => initSmoothScroll(), [])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const cleanup = initSmoothScroll()
+    return () => {
+      if (cleanup) cleanup()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (isLoading) {
+      lockScroll(true)
+      window.scrollTo(0, 0)
+    } else {
+      lockScroll(false)
+      refreshScroll()
+    }
+  }, [isLoading])
 
   useRevealOnScroll()
 
   return (
     <div id="top">
+      <AnimatePresence mode="wait">
+        {isLoading && (
+          <Preloader onComplete={() => setIsLoading(false)} />
+        )}
+      </AnimatePresence>
       <StarfallCursor starColor="#2e5bff" starSize={12} glowIntensity={3} />
       <a
         href="#main"

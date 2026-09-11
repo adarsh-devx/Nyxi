@@ -10,14 +10,23 @@ export function initSmoothScroll() {
   if (lenis) return () => {}
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return () => {}
 
-  lenis = new Lenis({ lerp: 0.1 })
+  lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    orientation: 'vertical',
+    gestureOrientation: 'vertical',
+    smoothWheel: true,
+    wheelMultiplier: 1,
+    touchMultiplier: 2,
+    infinite: false,
+  })
 
-  let raf = 0
+  let rafId = 0
   const loop = (time) => {
     lenis.raf(time)
-    raf = requestAnimationFrame(loop)
+    rafId = requestAnimationFrame(loop)
   }
-  raf = requestAnimationFrame(loop)
+  rafId = requestAnimationFrame(loop)
 
   // Route in-page anchor clicks through Lenis for eased scrolling.
   const onClick = (event) => {
@@ -28,21 +37,34 @@ export function initSmoothScroll() {
     const target = document.querySelector(hash)
     if (!target) return
     event.preventDefault()
-    lenis.scrollTo(target, { offset: -80 }) // clear the sticky navbar
+    lenis.scrollTo(target, { offset: -80, duration: 1.4 }) // clear the sticky navbar
   }
   document.addEventListener('click', onClick)
 
   return () => {
     document.removeEventListener('click', onClick)
-    cancelAnimationFrame(raf)
+    cancelAnimationFrame(rafId)
     lenis.destroy()
     lenis = null
   }
 }
 
-/** Lock/unlock page scrolling (mobile drawer). Safe when Lenis is inactive. */
+/** Recalculate dimensions for Lenis when page layout changes. */
+export function refreshScroll() {
+  if (lenis) {
+    lenis.resize()
+  }
+}
+
+/** Lock/unlock page scrolling (preloader, mobile drawer). Safe when Lenis is inactive. */
 export function lockScroll(lock) {
   if (!lenis) return
-  if (lock) lenis.stop()
-  else lenis.start()
+  if (lock) {
+    lenis.stop()
+  } else {
+    lenis.start()
+    requestAnimationFrame(() => {
+      if (lenis) lenis.resize()
+    })
+  }
 }
